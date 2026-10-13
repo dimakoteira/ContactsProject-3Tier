@@ -17,7 +17,7 @@ namespace ContactsDataLayer
     }
     public class clsContactData
     {
-
+        private static readonly string logFile = "ExceptionLOG.txt";
         private static object isNull(object value)
         {
             return string.IsNullOrWhiteSpace(value?.ToString()) ? DBNull.Value : (object)value;
@@ -54,7 +54,9 @@ namespace ContactsDataLayer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
                 }
             }
             return contact;
@@ -89,7 +91,9 @@ namespace ContactsDataLayer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
                 }
 
             }
@@ -121,7 +125,9 @@ namespace ContactsDataLayer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
                 }
             }
             return rowAffected > 0;
@@ -143,7 +149,9 @@ namespace ContactsDataLayer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
                 }
             }
             return rowAffected > 0;
@@ -168,7 +176,9 @@ namespace ContactsDataLayer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
                 }
             }
             return dt;
