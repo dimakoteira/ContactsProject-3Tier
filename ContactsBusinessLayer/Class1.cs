@@ -1,6 +1,5 @@
 ﻿using ContactsDataLayer;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
+using System.Data;
 namespace ContactsBusinessLayer
 {
     public class clsContact
@@ -112,6 +111,14 @@ namespace ContactsBusinessLayer
         public static bool deleteContact(int id)
         {
             return clsContactData.DeleteContact(id);
+        }
+
+        public static DataTable GetContacts()
+        {
+            DataTable dt = clsContactData.ListContacts();
+            if (dt.Rows.Count > 0)
+                return dt;
+            else return null;
         }
     }
    

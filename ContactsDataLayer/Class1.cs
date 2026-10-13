@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
+using System.Data;
 
 namespace ContactsDataLayer
 {
@@ -148,6 +147,31 @@ namespace ContactsDataLayer
                 }
             }
             return rowAffected > 0;
+        }
+
+        //list all contacts
+        public static DataTable ListContacts()
+        {
+            DataTable dt = new DataTable();
+            string query = "select * from Contacts";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            dt.Load(reader);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return dt;
         }
     }
 }

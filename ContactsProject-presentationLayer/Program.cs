@@ -1,5 +1,5 @@
 ﻿using ContactsBusinessLayer;
-
+using System.Data;
 //find contact
 void testFindContact()
 {
@@ -219,7 +219,42 @@ void testDeleteContact()
     else { Console.WriteLine("contact was not found"); }
 }
 
+
+//list contacts
+void testListContacts()
+{
+    DataTable dt = clsContact.GetContacts();
+    if (dt != null)
+    {
+        Console.WriteLine("-------------------- Contacts List ------------------------");
+
+        // طباعة رؤوس الأعمدة مع تحديد عرض ثابت لكل عمود
+        string headerFormat = "{0,-6} | {1,-12} | {2,-12} | {3,-22} | {4,-12} | {5,-15} | {6,-12} | {7,-9} | {8}";
+
+        Console.WriteLine(string.Format(headerFormat, "ID", "FirstName", "LastName", "Email", "Phone", "Address", "DateOfBirth", "Country", "ImagePath"));
+        Console.WriteLine(new string('-', 130)); 
+        foreach (DataRow row in dt.Rows)
+        {
+            int id = (int)row["ContactID"];
+            string firstName = row["FirstName"].ToString();
+            string lastName = row["LastName"].ToString();
+            string email = row["Email"].ToString();
+            string phone = row["Phone"].ToString();
+            string address = row["Address"].ToString();
+
+            string dob = Convert.ToDateTime(row["DateOfBirth"]).ToString("yyyy-MM-dd");
+
+            int countryID = (int)row["CountryID"];
+
+            Console.WriteLine(string.Format(headerFormat, id, firstName, lastName, email, phone, address, dob, countryID));
+        }
+    }
+    else Console.WriteLine("contacts not found");
+}
+
+
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
-testDeleteContact();
+//testDeleteContact();
+testListContacts();
