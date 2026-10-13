@@ -45,9 +45,9 @@ namespace ContactsDataLayer
                         contact.LastName = (string)reader["LastName"];
                         contact.Address = (string)reader["Address"];
                         contact.Email = (string)reader["Email"];
-                        contact.Phone =(string) reader["Phone"];
-                        contact.DateOfBirth =(DateTime) reader["DateOfBirth"];
-                        contact.CountryID =(int) reader["CountryID"];
+                        contact.Phone = (string)reader["Phone"];
+                        contact.DateOfBirth = (DateTime)reader["DateOfBirth"];
+                        contact.CountryID = (int)reader["CountryID"];
                         contact.ImagePath = reader["ImagePath"] != DBNull.Value ? reader["ImagePath"].ToString() : "";
                     }
                     reader.Close();
@@ -62,26 +62,26 @@ namespace ContactsDataLayer
         }
 
         //add contact
-     public static int AddContact(clsContactDTO contact)
+        public static int AddContact(clsContactDTO contact)
         {
             int newID = -1;
-            string query="insert into Contacts (FirstName, LastName, Email, Phone, Address, DateOfBirth, CountryID, ImagePath) values (@FirstName, @LastName, @Email, @Phone, @Address, @DateOfBirth, @CountryID, @ImagePath); SELECT SCOPE_IDENTITY();";
+            string query = "insert into Contacts (FirstName, LastName, Email, Phone, Address, DateOfBirth, CountryID, ImagePath) values (@FirstName, @LastName, @Email, @Phone, @Address, @DateOfBirth, @CountryID, @ImagePath); SELECT SCOPE_IDENTITY();";
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
-                using(SqlCommand cmd=new SqlCommand(query,connection))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@FirstName",contact.FirstName);
-                cmd.Parameters.AddWithValue("@LastName",contact.LastName);
-                cmd.Parameters.AddWithValue("@Email",contact.Email);
-                cmd.Parameters.AddWithValue("@Phone",contact.Phone);
-                cmd.Parameters.AddWithValue("@Address",contact.Address);
-                cmd.Parameters.AddWithValue("@DateOfBirth",contact.DateOfBirth);
-                cmd.Parameters.AddWithValue("@CountryID",contact.CountryID);
-                cmd.Parameters.AddWithValue("@ImagePath",isNull(contact.ImagePath));
+                cmd.Parameters.AddWithValue("@FirstName", contact.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", contact.LastName);
+                cmd.Parameters.AddWithValue("@Email", contact.Email);
+                cmd.Parameters.AddWithValue("@Phone", contact.Phone);
+                cmd.Parameters.AddWithValue("@Address", contact.Address);
+                cmd.Parameters.AddWithValue("@DateOfBirth", contact.DateOfBirth);
+                cmd.Parameters.AddWithValue("@CountryID", contact.CountryID);
+                cmd.Parameters.AddWithValue("@ImagePath", isNull(contact.ImagePath));
                 try
                 {
                     connection.Open();
                     object res = cmd.ExecuteScalar();
-                    if(res!=null&&int .TryParse(res.ToString(),out int id))
+                    if (res != null && int.TryParse(res.ToString(), out int id))
                     {
                         newID = id;
                         contact.ContactID = newID;
@@ -97,6 +97,57 @@ namespace ContactsDataLayer
             return newID;
         }
 
-      
+        //update contact
+        public static bool UpdateContact(clsContactDTO contact)
+        {
+            int rowAffected = 0;
+            string query = "UPDATE Contacts SET FirstName=@FirstName, LastName=@LastName, Email=@Email, Phone=@Phone, Address=@Address, DateOfBirth=@DateOfBirth, CountryID=@CountryID, ImagePath=@ImagePath WHERE ContactID=@ContactID";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@FirstName", contact.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", contact.LastName);
+                cmd.Parameters.AddWithValue("@Email", contact.Email);
+                cmd.Parameters.AddWithValue("@Phone", contact.Phone);
+                cmd.Parameters.AddWithValue("@Address", contact.Address);
+                cmd.Parameters.AddWithValue("@DateOfBirth", contact.DateOfBirth);
+                cmd.Parameters.AddWithValue("@CountryID", contact.CountryID);
+                cmd.Parameters.AddWithValue("@ImagePath", isNull(contact.ImagePath));
+                cmd.Parameters.AddWithValue("@ContactID", contact.ContactID);
+
+                try
+                {
+                    connection.Open();
+                    rowAffected = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+            }
+            return rowAffected > 0;
+        }
+
+        //delete contact
+        public static bool DeleteContact(int contactID)
+        {
+            int rowAffected = 0;
+            string query = "delete from Contacts where contactID=@contactID";
+            using(SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@contactID", contactID);
+                try
+                {
+                    connection.Open();
+                    rowAffected = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return rowAffected > 0;
+        }
     }
 }

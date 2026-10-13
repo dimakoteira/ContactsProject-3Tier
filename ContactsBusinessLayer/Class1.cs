@@ -9,7 +9,7 @@ namespace ContactsBusinessLayer
        private  enMode mode= enMode.add;
         public int ContactID { get; set; }
         public string FirstName { get; set; }
-        public string LastName { get; set} 
+        public string LastName { get; set; } 
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
@@ -47,7 +47,7 @@ namespace ContactsBusinessLayer
         public static clsContact GetContact(int Id)
             {
                 clsContactDTO dto = clsContactData.FindContact(Id);
-                if (dto != null)
+                if (dto != null) 
                     return new clsContact(dto);
                 else
                     return null;
@@ -70,21 +70,49 @@ namespace ContactsBusinessLayer
             this.ContactID = clsContactData.AddContact(dto);
             return this.ContactID!=-1;
         }
-        public bool save(clsContact contact)
+
+        //update
+        private bool _UpdateContact(clsContact contact)
         {
-            switch(mode)
+            clsContactDTO dto = new clsContactDTO
+            {
+                ContactID= contact.ContactID,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                Email = contact.Email,
+                Phone = contact.Phone,
+                Address = contact.Address,
+                DateOfBirth = contact.DateOfBirth,
+                CountryID = contact.CountryID,
+                ImagePath = contact.ImagePath
+            };
+            return clsContactData.UpdateContact(dto);
+        }
+        public bool save()
+        {
+            switch (mode)
             {
                 case enMode.add:
-                    if (_AddContact(contact))
+                    { 
+                    if (_AddContact(this))
                     {
                         mode = enMode.update;
                         return true;
                     }
                     else return false;
+                    }
+
+                case enMode.update:
+                    return _UpdateContact(this);
+                       
             }
             return false;
         }
 
+        public static bool deleteContact(int id)
+        {
+            return clsContactData.DeleteContact(id);
+        }
     }
    
 }
