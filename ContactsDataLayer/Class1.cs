@@ -17,7 +17,8 @@ namespace ContactsDataLayer
     }
     public class clsContactData
     {
-        private static readonly string logFile = "ExceptionLOG.txt";
+        // الوصول إلى مسار المجلد الأساسي لمشروع الـ DataLayer تلقائياً
+        private static readonly string logFile = @"D:\Desktop\abu hadhoud 18\contactSolution\ContactsProject-3Tier\ContactsDataLayer\ExceptionsLOG.txt";
         private static object isNull(object value)
         {
             return string.IsNullOrWhiteSpace(value?.ToString()) ? DBNull.Value : (object)value;
@@ -182,6 +183,36 @@ namespace ContactsDataLayer
                 }
             }
             return dt;
+        }
+
+        //is contact exist
+        public static bool isExist(int ContactID)
+        {
+            bool isFound = false;
+            string query = "select found=1 from Contacts where ContactID=@ContactID";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@ContactID", ContactID);
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            isFound = true;
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
+                }
+            
+            }
+            return isFound;
         }
     }
 }

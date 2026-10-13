@@ -120,6 +120,11 @@ namespace ContactsBusinessLayer
                 return dt;
             else return null;
         }
+
+        public static bool isContactExist(int id)
+        {
+            return clsContactData.isExist(id);
+        }
     }
    
 }

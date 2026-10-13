@@ -252,9 +252,23 @@ void testListContacts()
     else Console.WriteLine("contacts not found");
 }
 
+void testIsContactExist()
+{
+    int id;
+    Console.WriteLine("Enter Contact ID: ");
+    while (!int.TryParse(Console.ReadLine(), out id))
+    {
+        Console.WriteLine("Invalid input. Please enter a valid Contact ID:");
+    }
+    if (clsContact.isContactExist(id))
+        Console.WriteLine("contact found");
+    else Console.WriteLine("contact is not found");
+
+}
 
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
 //testDeleteContact();
-testListContacts();
+//testListContacts();
+testIsContactExist();
