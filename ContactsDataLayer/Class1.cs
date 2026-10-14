@@ -28,7 +28,7 @@ namespace ContactsDataLayer
         public static clsContactDTO FindContact(int Id)
         {
             clsContactDTO contact = null;
-            string query = "SELECT * FROM Contacts WHERE ContactID = @ContactID";
+            string query = "SELECT * FROM Contacts WHERE ContactID = @Id";
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {

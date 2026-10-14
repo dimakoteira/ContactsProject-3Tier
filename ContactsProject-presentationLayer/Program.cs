@@ -266,9 +266,52 @@ void testIsContactExist()
 
 }
 
+
+//test find country by id
+void testFindCountry()
+{
+    int id;
+    Console.WriteLine("Enter Country ID: ");
+    while (!int.TryParse(Console.ReadLine(), out id))
+    {
+        Console.WriteLine("Invalid input. Please enter a valid Country ID:");
+    }
+    clsCountries country = clsCountries.GetCountry(id);
+    if (country != null)
+    {
+        Console.WriteLine($"Country ID: {country.CountryID}");
+        Console.WriteLine($"Country Name: {country.CountryName}");
+    }
+    else
+    {
+        Console.WriteLine("Country not found.");
+    }
+}
+
+void testFindCountryByName()
+{
+    string name;
+    Console.WriteLine("enter country name: ");
+    while (string.IsNullOrWhiteSpace(name = Console.ReadLine()))
+    {
+        Console.WriteLine("Country Name cannot be empty. Please enter again:");
+    }
+    clsCountries country = clsCountries.GetCountry(name);
+    if (country != null)
+    {
+        Console.WriteLine("found");
+        Console.WriteLine($"Country ID: {country.CountryID}");
+    }
+    else
+    {
+        Console.WriteLine("Country not found.");
+    }
+
+}
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
 //testDeleteContact();
 //testListContacts();
-testIsContactExist();
+//testIsContactExist();
+testFindCountryByName();
