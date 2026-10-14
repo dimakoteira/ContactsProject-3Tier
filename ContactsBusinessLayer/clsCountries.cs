@@ -1,6 +1,7 @@
 ﻿using ContactsDataLayer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,14 +85,24 @@ namespace ContactsBusinessLayer
             return clsCountryData.DeleteCountry(id);
         }
 
+        //exist by id
         public static bool isCountryExist(int id)
         {
             return clsCountryData.isExist(id);
         }
 
+       // exist by name
         public static bool isCountryExist(string name)
         {
             return clsCountryData.isExist(name);
+        }
+
+        public static DataTable GetCountries()
+        {
+            DataTable dt = clsCountryData.ListCountries();
+            if (dt.Rows.Count > 0)
+                return dt;
+            else return null;
         }
     }
 }

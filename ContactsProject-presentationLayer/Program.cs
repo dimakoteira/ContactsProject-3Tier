@@ -424,6 +424,28 @@ void testIsCountryExistByName()
     }
 }
 
+void testListCountries()
+{
+    DataTable dt = clsCountries.GetCountries();
+    if (dt != null)
+    {
+        Console.WriteLine("-------------------- Country List ------------------------");
+
+        // طباعة رؤوس الأعمدة مع تحديد عرض ثابت لكل عمود
+        string headerFormat = "{0,-6} | {1,-12}";
+
+        Console.WriteLine(string.Format(headerFormat, "CountryID", "CountryName"));
+        Console.WriteLine(new string('-', 100));
+        foreach (DataRow row in dt.Rows)
+        {
+            int id = (int)row["CountryID"];
+            string countryName = row["CountryName"].ToString();
+            Console.WriteLine(string.Format(headerFormat, id, countryName));
+        }
+    }
+    else Console.WriteLine("countries not found");
+}
+
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
@@ -435,5 +457,6 @@ void testIsCountryExistByName()
 //testUpdateCountry();
 //testDeleteCountry();
 //testIsCountryExist();
-testIsCountryExistByName();
+//testIsCountryExistByName();
+testListCountries();
 
