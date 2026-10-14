@@ -84,5 +84,14 @@ namespace ContactsBusinessLayer
             return clsCountryData.DeleteCountry(id);
         }
 
+        public static bool isCountryExist(int id)
+        {
+            return clsCountryData.isExist(id);
+        }
+
+        public static bool isCountryExist(string name)
+        {
+            return clsCountryData.isExist(name);
+        }
     }
 }

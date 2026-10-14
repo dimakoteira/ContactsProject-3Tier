@@ -189,5 +189,65 @@ namespace ContactsDataLayer
             return rowAffected > 0;
         }
 
+
+        //is country exist by id
+        public static bool isExist(int CountryID)
+        {
+            bool isFound = false;
+            string query = "select found=1 from Countries where CountryID=@CountryID";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@CountryID", CountryID);
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            isFound = true;
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
+                }
+
+            }
+            return isFound;
+        }
+
+        //is country exist by name
+        public static bool isExist(string CountryName)
+        {
+            bool isFound = false;
+            string query = "select found=1 from Countries where CountryName=@CountryName";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@CountryName", CountryName);
+                try
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                            isFound = true;
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
+                }
+
+            }
+            return isFound;
+        }
     }
 }

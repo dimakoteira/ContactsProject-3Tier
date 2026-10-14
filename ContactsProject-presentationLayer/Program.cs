@@ -323,7 +323,7 @@ void testAddCountry()
     {
         Console.WriteLine("Country Name cannot be empty. Please enter again:");
     }
-    if (clsCountries.GetCountry(country.CountryName) != null)
+    if (clsCountries.isCountryExist(country.CountryName) )
     {
         Console.WriteLine("country already exist in the database");
         return;
@@ -356,8 +356,7 @@ void testUpdateCountry()
         }
         else Console.WriteLine("Invalid number. Please enter again:");
     }
-    country = clsCountries.GetCountry(country.CountryID);
-    if (country != null)
+    if (clsCountries.isCountryExist(country.CountryID))
     {
         Console.WriteLine("enter the new country name: ");
         while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
@@ -387,8 +386,7 @@ void testDeleteCountry()
         }
         else Console.WriteLine("Invalid number. Please enter again:");
     }
-    clsCountries country = clsCountries.GetCountry(id);
-    if (country != null)
+    if (clsCountries.isCountryExist(id))
     {
         if (clsCountries.deleteCountry(id))
         { Console.WriteLine("country deleted succesfully"); }
@@ -397,6 +395,34 @@ void testDeleteCountry()
     else Console.WriteLine("country was not found");
 }
 
+//is country exist
+void testIsCountryExist()
+{
+    int id;
+    Console.WriteLine("Enter Country ID: ");
+    while (!int.TryParse(Console.ReadLine(), out id))
+    {
+        Console.WriteLine("Invalid input. Please enter a valid Country ID:");
+    }
+    if (clsCountries.isCountryExist(id))
+        Console.WriteLine("country found");
+    else Console.WriteLine("country not found");
+}
+void testIsCountryExistByName()
+{
+    string name;
+    Console.WriteLine("enter country name: ");
+    while (string.IsNullOrWhiteSpace(name = Console.ReadLine()))
+    {
+        Console.WriteLine("Country Name cannot be empty. Please enter again:");
+    }
+    if (clsCountries.isCountryExist(name))
+        Console.WriteLine("country found");
+    else
+    {
+        Console.WriteLine("country not found");
+    }
+}
 
 //testFindContact();
 //testAddContact();
@@ -407,5 +433,7 @@ void testDeleteCountry()
 // testFindCountryByName();
 //testAddCountry();
 //testUpdateCountry();
-testDeleteCountry();
+//testDeleteCountry();
+//testIsCountryExist();
+testIsCountryExistByName();
 
