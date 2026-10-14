@@ -139,7 +139,7 @@ void getUpdatedInfo(clsContact newContact)
     newContact.ImagePath = Console.ReadLine();
 }
 
-//add
+//add contact
 void testAddContact()
 {
     clsContact newContact = getInfo();
@@ -171,7 +171,7 @@ void print(clsContact contact)
     Console.WriteLine("-------------------------------------------------------");
 }
 
-//update
+//update contact
 void testUpdateContact()
 {
     clsContact contact = new clsContact();
@@ -199,7 +199,7 @@ void testUpdateContact()
     else Console.WriteLine("contact not found");
 }
 
-//delete
+//delete contact
 void testDeleteContact()
 {
     int id=0;
@@ -256,6 +256,7 @@ void testListContacts()
     else Console.WriteLine("contacts not found");
 }
 
+//is contact exist
 void testIsContactExist()
 {
     int id;
@@ -269,7 +270,6 @@ void testIsContactExist()
     else Console.WriteLine("contact is not found");
 
 }
-
 
 //test find country by id
 void testFindCountry()
@@ -292,6 +292,7 @@ void testFindCountry()
     }
 }
 
+//find country by name
 void testFindCountryByName()
 {
     string name;
@@ -313,6 +314,7 @@ void testFindCountryByName()
 
 }
 
+//add country
 void testAddCountry()
 {
     clsCountries country = new clsCountries();
@@ -370,6 +372,32 @@ void testUpdateCountry()
     }
     else Console.WriteLine("country was not found");
 }
+
+//delete country
+void testDeleteCountry()
+{
+    int id = 0;
+    Console.WriteLine("Enter Country ID: ");
+    while (true)//check the right format of  id
+    {
+        if (int.TryParse(Console.ReadLine(), out int CountryId))
+        {
+           id = CountryId;
+            break;
+        }
+        else Console.WriteLine("Invalid number. Please enter again:");
+    }
+    clsCountries country = clsCountries.GetCountry(id);
+    if (country != null)
+    {
+        if (clsCountries.deleteCountry(id))
+        { Console.WriteLine("country deleted succesfully"); }
+        else { Console.WriteLine("there was an error deleting this country"); }
+    }
+    else Console.WriteLine("country was not found");
+}
+
+
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
@@ -378,5 +406,6 @@ void testUpdateCountry()
 //testIsContactExist();
 // testFindCountryByName();
 //testAddCountry();
-testUpdateCountry();
+//testUpdateCountry();
+testDeleteCountry();
 

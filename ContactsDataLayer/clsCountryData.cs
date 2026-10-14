@@ -137,5 +137,57 @@ namespace ContactsDataLayer
             return rowAffected > 0;
         }
 
+        //for proper delete(fk-sonstraint) don;t delete any country that is used in contacts
+        public static bool isCountryLinkedToContact(int id)
+        {
+            bool isLinked = false;
+            string query = "SELECT FOUND = 1 FROM Contacts WHERE CountryID = @CountryID";
+
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@CountryID", id);
+                try
+                {
+                    connection.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        isLinked = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                }
+            }
+            return isLinked;
+        }
+        
+        //delete
+        public static bool DeleteCountry(int countryID)
+        {
+            int rowAffected = 0;
+            string query = "delete from Countries where countryID=@countryID";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@countryID", countryID);
+                try
+                {
+                    connection.Open();
+                    rowAffected = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error"+ ex.Message);
+                }
+            }
+            return rowAffected > 0;
+        }
+
     }
 }

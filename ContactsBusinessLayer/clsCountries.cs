@@ -75,5 +75,14 @@ namespace ContactsBusinessLayer
             }
             return false;
         }
+
+        //delete
+        public static bool deleteCountry(int id)
+        {
+            if(clsCountryData.isCountryLinkedToContact(id))
+                return false;
+            return clsCountryData.DeleteCountry(id);
+        }
+
     }
 }

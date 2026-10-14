@@ -3,3 +3,7 @@
 10/13/2026 10:36:29 PM: Must declare the scalar variable "@Id".
 10/14/2026 11:06:18 AM: Invalid object name 'Country'.
 10/14/2026 11:06:58 AM: Invalid object name 'Country'.
+10/14/2026 12:34:51 PM: The DELETE statement conflicted with the REFERENCE constraint "FK__Contacts__Countr__398D8EEE". The conflict occurred in database "ContactsDB2", table "dbo.Contacts", column 'CountryID'.
+The statement has been terminated.
+10/14/2026 12:35:35 PM: The DELETE statement conflicted with the REFERENCE constraint "FK__Contacts__Countr__398D8EEE". The conflict occurred in database "ContactsDB2", table "dbo.Contacts", column 'CountryID'.
+The statement has been terminated.
