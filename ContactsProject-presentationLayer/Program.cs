@@ -339,12 +339,44 @@ void testAddCountry()
         }
     }
 }
-    //testFindContact();
-    //testAddContact();
-    //testUpdateContact();
-    //testDeleteContact();
-    //testListContacts();
-    //testIsContactExist();
-    // testFindCountryByName();
-    testAddCountry();
+
+//update country
+void testUpdateCountry()
+{
+    clsCountries country = new clsCountries();
+    Console.WriteLine("enter country id you want to update");
+    while (true)//check the right format of  id
+    {
+        if (int.TryParse(Console.ReadLine(), out int CountryId))
+        {
+            country.CountryID = CountryId;
+            break;
+        }
+        else Console.WriteLine("Invalid number. Please enter again:");
+    }
+    country = clsCountries.GetCountry(country.CountryID);
+    if (country != null)
+    {
+        Console.WriteLine("enter the new country name: ");
+        while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
+        {
+            Console.WriteLine("Country Name cannot be empty. Please enter again:");
+        }
+        if (country.save())
+        {
+            Console.WriteLine("country updated suuccesfully");
+        }
+        else { Console.WriteLine("there was an error updating this country"); }
+    }
+    else Console.WriteLine("country was not found");
+}
+//testFindContact();
+//testAddContact();
+//testUpdateContact();
+//testDeleteContact();
+//testListContacts();
+//testIsContactExist();
+// testFindCountryByName();
+//testAddCountry();
+testUpdateCountry();
 

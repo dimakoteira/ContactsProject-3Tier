@@ -18,6 +18,7 @@ namespace ContactsBusinessLayer
         {
             this.CountryID = dto.CountryID;
             this.CountryName = dto.CountryName;
+            mode = enMode.update;
         }
         public clsCountries() { }
         public static clsCountries GetCountry(int Id)
@@ -44,6 +45,16 @@ namespace ContactsBusinessLayer
             return this.CountryID != -1;
         }
 
+        //update
+        private bool _UpdateCountry()
+        {
+            clsCountryDTO dto = new clsCountryDTO
+            {
+                CountryID = this.CountryID,
+                CountryName = this.CountryName,
+            };
+            return clsCountryData.UpdateCountry(dto);
+        }
         public bool save()
         {
             switch (mode)
@@ -58,8 +69,8 @@ namespace ContactsBusinessLayer
                         else return false;
                     }
 
-                //case enMode.update:
-                //    return _UpdateContact(this);
+                case enMode.update:
+                    return _UpdateCountry();
 
             }
             return false;

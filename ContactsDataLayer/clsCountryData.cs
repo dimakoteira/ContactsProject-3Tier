@@ -110,5 +110,32 @@ namespace ContactsDataLayer
             }
             return newID;
         }
+
+        //update
+        public static bool UpdateCountry(clsCountryDTO country)
+        {
+            int rowAffected = 0;
+            string query = "UPDATE Countries SET CountryName=@CountryName WHERE CountryID=@CountryID";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@CountryName", country.CountryName);
+                cmd.Parameters.AddWithValue("@CountryID", country.CountryID);
+
+                try
+                {
+                    connection.Open();
+                    rowAffected = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+                    Console.WriteLine(" There was an Error");
+                }
+            }
+            return rowAffected > 0;
+        }
+
     }
 }
