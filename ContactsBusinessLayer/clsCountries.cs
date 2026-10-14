@@ -9,6 +9,8 @@ namespace ContactsBusinessLayer
 {
    public class clsCountries
     {
+        private enum enMode { add, update };
+        private enMode mode = enMode.add;
         public int CountryID { get; set; } = -1;
         public string CountryName { get; set; } = string.Empty;
 
@@ -17,6 +19,7 @@ namespace ContactsBusinessLayer
             this.CountryID = dto.CountryID;
             this.CountryName = dto.CountryName;
         }
+        public clsCountries() { }
         public static clsCountries GetCountry(int Id)
         {
             clsCountryDTO dto = clsCountryData.FindCountryByID(Id);
@@ -33,6 +36,33 @@ namespace ContactsBusinessLayer
                 return new clsCountries(dto);
             else
                 return null;
+        }
+
+        private bool _AddCountry()
+        {
+            this.CountryID = clsCountryData.AddCountry(this.CountryName);
+            return this.CountryID != -1;
+        }
+
+        public bool save()
+        {
+            switch (mode)
+            {
+                case enMode.add:
+                    {
+                        if (_AddCountry())
+                        {
+                            mode = enMode.update;
+                            return true;
+                        }
+                        else return false;
+                    }
+
+                //case enMode.update:
+                //    return _UpdateContact(this);
+
+            }
+            return false;
         }
     }
 }

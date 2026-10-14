@@ -1,3 +1,5 @@
 10/13/2026 10:34:20 PM: Must declare the scalar variable "@Id".
 10/13/2026 10:35:16 PM: Must declare the scalar variable "@Id".
 10/13/2026 10:36:29 PM: Must declare the scalar variable "@Id".
+10/14/2026 11:06:18 AM: Invalid object name 'Country'.
+10/14/2026 11:06:58 AM: Invalid object name 'Country'.

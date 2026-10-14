@@ -80,5 +80,35 @@ namespace ContactsDataLayer
             return country;
         }
 
+        //add country
+        public static int AddCountry(string country)
+        {
+            int newID = -1;
+            string query = "insert into Countries (CountryName) values (@CountryName); SELECT SCOPE_IDENTITY();";
+            using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@CountryName", country);
+                try
+                {
+                    connection.Open();
+                    object res = cmd.ExecuteScalar();
+                    if (res != null && int.TryParse(res.ToString(), out int id))
+                    {
+                        newID = id;                    
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    string message = $"{DateTime.Now}: {ex.Message}\n";
+                    File.AppendAllText(logFile, message);
+
+                    Console.WriteLine(" There was an Error");
+                }
+
+            }
+            return newID;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using ContactsBusinessLayer;
+using ContactsDataLayer;
 using System.Data;
+using System.Xml.Linq;
 //find contact
 void testFindContact()
 {
@@ -136,6 +138,8 @@ void getUpdatedInfo(clsContact newContact)
     Console.WriteLine("Enter Image Path:");
     newContact.ImagePath = Console.ReadLine();
 }
+
+//add
 void testAddContact()
 {
     clsContact newContact = getInfo();
@@ -308,10 +312,39 @@ void testFindCountryByName()
     }
 
 }
-//testFindContact();
-//testAddContact();
-//testUpdateContact();
-//testDeleteContact();
-//testListContacts();
-//testIsContactExist();
-testFindCountryByName();
+
+void testAddCountry()
+{
+    clsCountries country = new clsCountries();
+    Console.WriteLine("enter country name you want to add: ");
+    while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
+    {
+        Console.WriteLine("Country Name cannot be empty. Please enter again:");
+    }
+    if (clsCountries.GetCountry(country.CountryName) != null)
+    {
+        Console.WriteLine("country already exist in the database");
+        return;
+    }
+    else
+    {
+        if (country.save())
+        {
+            Console.WriteLine("country added succesfully with id: " + country.CountryID);
+        }
+        else
+        {
+            Console.WriteLine("there was an error adding this country");
+
+        }
+    }
+}
+    //testFindContact();
+    //testAddContact();
+    //testUpdateContact();
+    //testDeleteContact();
+    //testListContacts();
+    //testIsContactExist();
+    // testFindCountryByName();
+    testAddCountry();
+
