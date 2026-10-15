@@ -32,7 +32,7 @@ namespace ContactsDataLayer
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@ContactID", Id);
+                cmd.Parameters.AddWithValue("@Id", Id);
                 try
                 {
                     connection.Open();

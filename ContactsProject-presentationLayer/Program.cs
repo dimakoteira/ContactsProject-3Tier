@@ -1,8 +1,22 @@
 ﻿using ContactsBusinessLayer;
-using ContactsDataLayer;
 using System.Data;
-using System.Diagnostics.Metrics;
-using System.Xml.Linq;
+
+//print contact info
+void print(clsContact contact)
+{
+
+    Console.WriteLine($"Contact ID: {contact.ContactID}");
+    Console.WriteLine($"First Name: {contact.FirstName}");
+    Console.WriteLine($"Last Name: {contact.LastName}");
+    Console.WriteLine($"Email: {contact.Email}");
+    Console.WriteLine($"Phone: {contact.Phone}");
+    Console.WriteLine($"Address: {contact.Address}");
+    Console.WriteLine($"Date of Birth: {(contact.DateOfBirth == DateTime.MinValue ? "N/A" : contact.DateOfBirth.ToShortDateString())}");
+    Console.WriteLine($"Country ID: {contact.CountryID}");
+    Console.WriteLine($"Image Path: {contact.ImagePath}");
+    Console.WriteLine("-------------------------------------------------------");
+}
+
 //find contact
 void testFindContact()
 {
@@ -12,18 +26,11 @@ void testFindContact()
     {
         Console.WriteLine("Invalid input. Please enter a valid Contact ID:");
     }
+
     clsContact contact = clsContact.GetContact(id);
     if (contact != null)
     {
-        Console.WriteLine($"Contact ID: {contact.ContactID}");
-        Console.WriteLine($"First Name: {contact.FirstName}");
-        Console.WriteLine($"Last Name: {contact.LastName}");
-        Console.WriteLine($"Email: {contact.Email}");
-        Console.WriteLine($"Phone: {contact.Phone}");
-        Console.WriteLine($"Address: {contact.Address}");
-        Console.WriteLine($"Date of Birth: {contact.DateOfBirth.ToShortDateString()}");
-        Console.WriteLine($"Country ID: {contact.CountryID}");
-        Console.WriteLine($"Image Path: {contact.ImagePath}");
+        print(contact);
     }
     else
     {
@@ -156,22 +163,6 @@ void testAddContact()
 
 }
 
-//print info
-void print(clsContact contact)
-{
-
-    Console.WriteLine($"Contact ID: {contact.ContactID}");
-    Console.WriteLine($"First Name: {contact.FirstName}");
-    Console.WriteLine($"Last Name: {contact.LastName}");
-    Console.WriteLine($"Email: {contact.Email}");
-    Console.WriteLine($"Phone: {contact.Phone}");
-    Console.WriteLine($"Address: {contact.Address}");
-    Console.WriteLine($"Date of Birth: {(contact.DateOfBirth == DateTime.MinValue ? "N/A" : contact.DateOfBirth.ToShortDateString())}");
-    Console.WriteLine($"Country ID: {contact.CountryID}");
-    Console.WriteLine($"Image Path: {contact.ImagePath}");
-    Console.WriteLine("-------------------------------------------------------");
-}
-
 //update contact
 void testUpdateContact()
 {
@@ -187,8 +178,7 @@ void testUpdateContact()
         }
         else Console.WriteLine("Invalid number. Please enter again:");
     }
-
-      contact = clsContact.GetContact(contact.ContactID);//check if contact is found
+    contact = clsContact.GetContact(contact.ContactID);//check if contact is found
     if (contact != null)
     {
         print(contact);
@@ -204,7 +194,7 @@ void testUpdateContact()
 void testDeleteContact()
 {
     int id=0;
-    Console.WriteLine("enetr contact is you want to delete: ");
+    Console.WriteLine("enter contact id you want to delete: ");
     while (true)//check the right format of  id
     {
         if (int.TryParse(Console.ReadLine(), out int ContactId))
@@ -215,7 +205,7 @@ void testDeleteContact()
         else Console.WriteLine("Invalid number. Please enter again:");
     }
 
-    if (clsContact.GetContact(id) != null)
+    if (clsContact.isContactExist(id))
     {
         if (clsContact.deleteContact(id))
             Console.WriteLine("contact deleted succesfully");
@@ -223,7 +213,6 @@ void testDeleteContact()
     }
     else { Console.WriteLine("contact was not found"); }
 }
-
 
 //list contacts
 void testListContacts()
@@ -234,7 +223,7 @@ void testListContacts()
         Console.WriteLine("-------------------- Contacts List ------------------------");
 
         // طباعة رؤوس الأعمدة مع تحديد عرض ثابت لكل عمود
-        string headerFormat = "{0,-6} | {1,-12} | {2,-12} | {3,-22} | {4,-12} | {5,-15} | {6,-12} | {7,-9} | {8}";
+        string headerFormat = "{0,-6} | {1,-12} | {2,-12} | {3,-22} | {4,-12} | {5,-15} | {6,-12} | {7,-9}";
 
         Console.WriteLine(string.Format(headerFormat, "ID", "FirstName", "LastName", "Email", "Phone", "Address", "DateOfBirth", "Country", "ImagePath"));
         Console.WriteLine(new string('-', 130)); 
@@ -272,6 +261,14 @@ void testIsContactExist()
 
 }
 
+
+void printCountryInfo(clsCountries country)
+{
+    Console.WriteLine($"Country ID: {country.CountryID}");
+    Console.WriteLine($"Country Name: {country.CountryName}");
+    Console.WriteLine($"Country Code: {country.Code}");
+    Console.WriteLine($"Phone Code: {country.PhoneCode}");
+}
 //test find country by id
 void testFindCountry()
 {
@@ -284,10 +281,8 @@ void testFindCountry()
     clsCountries country = clsCountries.GetCountry(id);
     if (country != null)
     {
-        Console.WriteLine($"Country ID: {country.CountryID}");
-        Console.WriteLine($"Country Name: {country.CountryName}");
-        Console.WriteLine($"Country Code: { country.Code}");
-        Console.WriteLine($"Phone Code: { country.PhoneCode}");
+        Console.WriteLine($"Found");
+        printCountryInfo(country);
     }
     else
     {
@@ -308,10 +303,7 @@ void testFindCountryByName()
     if (country != null)
     {
         Console.WriteLine("found");
-        Console.WriteLine($"Country ID: {country.CountryID}");
-        Console.WriteLine($"Country Name: {country.CountryName}");
-        Console.WriteLine($"Country Code: {country.Code}");
-        Console.WriteLine($"Phone Code: {country.PhoneCode}");
+        printCountryInfo(country);
 
     }
     else
@@ -321,7 +313,7 @@ void testFindCountryByName()
 
 }
 
-void getUpdatedCountryInfo(ref clsCountries country)
+void getUpdatedCountryInfo( clsCountries country)
 {
 
     Console.WriteLine("Enter Country name:");
@@ -334,7 +326,8 @@ void getUpdatedCountryInfo(ref clsCountries country)
     Console.WriteLine("Enter Phone Code:");
     country.PhoneCode = Console.ReadLine();
 }
-    clsCountries getCountryInfo()
+
+clsCountries getCountryInfo()
 {
     clsCountries country = new clsCountries();
     Console.WriteLine("enter country name: ");
@@ -343,15 +336,9 @@ void getUpdatedCountryInfo(ref clsCountries country)
         Console.WriteLine("Country Name cannot be empty. Please enter again:");
     }
     Console.WriteLine("enter country code: ");
-    while (string.IsNullOrWhiteSpace(country.Code = Console.ReadLine()))
-    {
-        Console.WriteLine("Code cannot be empty. Please enter again:");
-    }
+    country.Code = Console.ReadLine();
     Console.WriteLine("enter Phone Code: ");
-    while (string.IsNullOrWhiteSpace(country.PhoneCode = Console.ReadLine()))
-    {
-        Console.WriteLine("Phone Code cannot be empty. Please enter again:");
-    }
+    country.PhoneCode = Console.ReadLine();
     return country;
 
 }
@@ -392,9 +379,12 @@ void testUpdateCountry()
         }
         else Console.WriteLine("Invalid number. Please enter again:");
     }
-    if (clsCountries.isCountryExist(country.CountryID))
+
+    country = clsCountries.GetCountry(country.CountryID);
+    if (country!=null)
     {
-        getUpdatedCountryInfo(ref country);
+        printCountryInfo(country);
+        getUpdatedCountryInfo(country);
         if (country.save())
         {
             Console.WriteLine("country updated suuccesfully");
@@ -480,6 +470,8 @@ void testListCountries()
     else Console.WriteLine("countries not found");
 }
 
+
+
 //testFindContact();
 //testAddContact();
 //testUpdateContact();
@@ -490,8 +482,8 @@ void testListCountries()
 //testFindCountry();
 //testAddCountry();
 //testUpdateCountry();
-//testDeleteCountry();
+testDeleteCountry();
 //testIsCountryExist();
 //testIsCountryExistByName();
-testListCountries();
+//testListCountries();
 

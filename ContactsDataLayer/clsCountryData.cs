@@ -25,6 +25,8 @@ namespace ContactsDataLayer
         {
             return string.IsNullOrWhiteSpace(value?.ToString()) ? DBNull.Value : (object)value;
         }
+
+        //find country by id
         public static clsCountryDTO FindCountryByID(int Id)
         {
             clsCountryDTO country = null;
@@ -41,7 +43,7 @@ namespace ContactsDataLayer
                     {
                         country = new clsCountryDTO();
                         country.CountryID = (int)reader["CountryID"];
-                        country.CountryName = reader["CountryName"]!=DBNull.Value?reader["CountryName"].ToString():"";
+                        country.CountryName = reader["CountryName"].ToString();
                         country.Code = reader["Code"] != DBNull.Value ? reader["Code"].ToString() : "";
                         country.PhoneCode = reader["PhoneCode"] != DBNull.Value ? reader["PhoneCode"].ToString() : "";
                     }
@@ -66,7 +68,7 @@ namespace ContactsDataLayer
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@name", isNull(name));
+                cmd.Parameters.AddWithValue("@name", name);
                 try
                 {
                     connection.Open();
@@ -75,7 +77,7 @@ namespace ContactsDataLayer
                     {
                         country = new clsCountryDTO();
                         country.CountryID = (int)reader["CountryID"];
-                        country.CountryName = reader["CountryName"] != DBNull.Value ? reader["CountryName"].ToString() : "";
+                        country.CountryName = reader["CountryName"] .ToString() ;
                         country.Code = reader["Code"] != DBNull.Value ? reader["Code"].ToString() : "";
                         country.PhoneCode = reader["PhoneCode"] != DBNull.Value ? reader["PhoneCode"].ToString() : "";
                     }
@@ -100,7 +102,7 @@ namespace ContactsDataLayer
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@CountryName", isNull(dto.CountryName));
+                cmd.Parameters.AddWithValue("@CountryName", dto.CountryName);
                 cmd.Parameters.AddWithValue("@Code",isNull(dto.Code));
                 cmd.Parameters.AddWithValue("@PhoneCode", isNull(dto.PhoneCode));
                 try
@@ -118,7 +120,7 @@ namespace ContactsDataLayer
                     string message = $"{DateTime.Now}: {ex.Message}\n";
                     File.AppendAllText(logFile, message);
 
-                    Console.WriteLine(" There was an Error");
+                    Console.WriteLine(" There was an Error"+ ex.Message);
                 }
 
             }
@@ -133,14 +135,10 @@ namespace ContactsDataLayer
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@CountryName", isNull(country.CountryName));
+                cmd.Parameters.AddWithValue("@CountryName", country.CountryName);
                 cmd.Parameters.AddWithValue("@CountryID", country.CountryID);
                 cmd.Parameters.AddWithValue("@Code", isNull(country.Code));
                 cmd.Parameters.AddWithValue("@PhoneCode", isNull(country.PhoneCode));
-
-
-
-
                 try
                 {
                     connection.Open();
