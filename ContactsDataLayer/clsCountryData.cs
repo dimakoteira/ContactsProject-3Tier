@@ -12,12 +12,19 @@ namespace ContactsDataLayer
     {
         public int CountryID { get; set; } = -1;
         public string CountryName { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+        public string PhoneCode { get; set; } = string.Empty;
+
     }
 
    public class clsCountryData
     {
         private static readonly string logFile = @"D:\Desktop\abu hadhoud 18\contactSolution\ContactsProject-3Tier\ContactsDataLayer\ExceptionsLOGcountries.txt";
 
+        private static object isNull(object value)
+        {
+            return string.IsNullOrWhiteSpace(value?.ToString()) ? DBNull.Value : (object)value;
+        }
         public static clsCountryDTO FindCountryByID(int Id)
         {
             clsCountryDTO country = null;
@@ -34,7 +41,9 @@ namespace ContactsDataLayer
                     {
                         country = new clsCountryDTO();
                         country.CountryID = (int)reader["CountryID"];
-                        country.CountryName = reader["CountryName"]!=DBNull.Value?reader["CountryName"].ToString():""; 
+                        country.CountryName = reader["CountryName"]!=DBNull.Value?reader["CountryName"].ToString():"";
+                        country.Code = reader["Code"] != DBNull.Value ? reader["Code"].ToString() : "";
+                        country.PhoneCode = reader["PhoneCode"] != DBNull.Value ? reader["PhoneCode"].ToString() : "";
                     }
                     reader.Close();
                     connection.Close();
@@ -57,7 +66,7 @@ namespace ContactsDataLayer
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@name", isNull(name));
                 try
                 {
                     connection.Open();
@@ -67,6 +76,8 @@ namespace ContactsDataLayer
                         country = new clsCountryDTO();
                         country.CountryID = (int)reader["CountryID"];
                         country.CountryName = reader["CountryName"] != DBNull.Value ? reader["CountryName"].ToString() : "";
+                        country.Code = reader["Code"] != DBNull.Value ? reader["Code"].ToString() : "";
+                        country.PhoneCode = reader["PhoneCode"] != DBNull.Value ? reader["PhoneCode"].ToString() : "";
                     }
                     reader.Close();
                     connection.Close();
@@ -82,14 +93,16 @@ namespace ContactsDataLayer
         }
 
         //add country
-        public static int AddCountry(string country)
+        public static int AddCountry(clsCountryDTO dto)
         {
             int newID = -1;
-            string query = "insert into Countries (CountryName) values (@CountryName); SELECT SCOPE_IDENTITY();";
+            string query = "insert into Countries (CountryName,Code,PhoneCode) values (@CountryName,@Code,@PhoneCode); SELECT SCOPE_IDENTITY();";
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@CountryName", country);
+                cmd.Parameters.AddWithValue("@CountryName", isNull(dto.CountryName));
+                cmd.Parameters.AddWithValue("@Code",isNull(dto.Code));
+                cmd.Parameters.AddWithValue("@PhoneCode", isNull(dto.PhoneCode));
                 try
                 {
                     connection.Open();
@@ -116,12 +129,17 @@ namespace ContactsDataLayer
         public static bool UpdateCountry(clsCountryDTO country)
         {
             int rowAffected = 0;
-            string query = "UPDATE Countries SET CountryName=@CountryName WHERE CountryID=@CountryID";
+            string query = "UPDATE Countries SET CountryName=@CountryName, Code=@Code, PhoneCode=@PhoneCode WHERE CountryID=@CountryID";
             using (SqlConnection connection = new SqlConnection(clsDataSetting.connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
-                cmd.Parameters.AddWithValue("@CountryName", country.CountryName);
+                cmd.Parameters.AddWithValue("@CountryName", isNull(country.CountryName));
                 cmd.Parameters.AddWithValue("@CountryID", country.CountryID);
+                cmd.Parameters.AddWithValue("@Code", isNull(country.Code));
+                cmd.Parameters.AddWithValue("@PhoneCode", isNull(country.PhoneCode));
+
+
+
 
                 try
                 {

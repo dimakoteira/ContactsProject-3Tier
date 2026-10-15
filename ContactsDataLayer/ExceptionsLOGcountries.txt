@@ -7,3 +7,4 @@
 The statement has been terminated.
 10/14/2026 12:35:35 PM: The DELETE statement conflicted with the REFERENCE constraint "FK__Contacts__Countr__398D8EEE". The conflict occurred in database "ContactsDB2", table "dbo.Contacts", column 'CountryID'.
 The statement has been terminated.
+10/14/2026 6:38:00 PM: Invalid column name 'PhoneCode'.

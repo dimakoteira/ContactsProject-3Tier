@@ -11,14 +11,20 @@ namespace ContactsBusinessLayer
    public class clsCountries
     {
         private enum enMode { add, update };
-        private enMode mode = enMode.add;
+        private static enMode mode = enMode.add;
         public int CountryID { get; set; } = -1;
         public string CountryName { get; set; } = string.Empty;
+        public string Code { get; set; }= string.Empty;
+
+        public string   PhoneCode { get; set; } = string.Empty;
+
 
         private clsCountries(clsCountryDTO dto)
         {
             this.CountryID = dto.CountryID;
             this.CountryName = dto.CountryName;
+            this.Code = dto.Code;
+            this.PhoneCode = dto.PhoneCode;
             mode = enMode.update;
         }
         public clsCountries() { }
@@ -42,7 +48,13 @@ namespace ContactsBusinessLayer
 
         private bool _AddCountry()
         {
-            this.CountryID = clsCountryData.AddCountry(this.CountryName);
+            clsCountryDTO dto = new clsCountryDTO
+            {
+                CountryName = this.CountryName,
+                Code = this.Code,
+                PhoneCode = this.PhoneCode,
+            };
+            this.CountryID = clsCountryData.AddCountry(dto);
             return this.CountryID != -1;
         }
 
@@ -53,6 +65,8 @@ namespace ContactsBusinessLayer
             {
                 CountryID = this.CountryID,
                 CountryName = this.CountryName,
+                Code = this.Code,
+                PhoneCode = this.PhoneCode,
             };
             return clsCountryData.UpdateCountry(dto);
         }
@@ -88,12 +102,15 @@ namespace ContactsBusinessLayer
         //exist by id
         public static bool isCountryExist(int id)
         {
+            mode = enMode.update;
+
             return clsCountryData.isExist(id);
         }
 
        // exist by name
         public static bool isCountryExist(string name)
         {
+            mode = enMode.update;
             return clsCountryData.isExist(name);
         }
 

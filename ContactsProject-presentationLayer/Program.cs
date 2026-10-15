@@ -1,6 +1,7 @@
 ﻿using ContactsBusinessLayer;
 using ContactsDataLayer;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 //find contact
 void testFindContact()
@@ -285,6 +286,8 @@ void testFindCountry()
     {
         Console.WriteLine($"Country ID: {country.CountryID}");
         Console.WriteLine($"Country Name: {country.CountryName}");
+        Console.WriteLine($"Country Code: { country.Code}");
+        Console.WriteLine($"Phone Code: { country.PhoneCode}");
     }
     else
     {
@@ -306,6 +309,10 @@ void testFindCountryByName()
     {
         Console.WriteLine("found");
         Console.WriteLine($"Country ID: {country.CountryID}");
+        Console.WriteLine($"Country Name: {country.CountryName}");
+        Console.WriteLine($"Country Code: {country.Code}");
+        Console.WriteLine($"Phone Code: {country.PhoneCode}");
+
     }
     else
     {
@@ -314,15 +321,44 @@ void testFindCountryByName()
 
 }
 
-//add country
-void testAddCountry()
+void getUpdatedCountryInfo(ref clsCountries country)
+{
+
+    Console.WriteLine("Enter Country name:");
+    while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
+    {
+        Console.WriteLine("country Name cannot be empty. Please enter again:");
+    }
+    Console.WriteLine("Enter Code:");
+    country.Code = Console.ReadLine();
+    Console.WriteLine("Enter Phone Code:");
+    country.PhoneCode = Console.ReadLine();
+}
+    clsCountries getCountryInfo()
 {
     clsCountries country = new clsCountries();
-    Console.WriteLine("enter country name you want to add: ");
+    Console.WriteLine("enter country name: ");
     while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
     {
         Console.WriteLine("Country Name cannot be empty. Please enter again:");
     }
+    Console.WriteLine("enter country code: ");
+    while (string.IsNullOrWhiteSpace(country.Code = Console.ReadLine()))
+    {
+        Console.WriteLine("Code cannot be empty. Please enter again:");
+    }
+    Console.WriteLine("enter Phone Code: ");
+    while (string.IsNullOrWhiteSpace(country.PhoneCode = Console.ReadLine()))
+    {
+        Console.WriteLine("Phone Code cannot be empty. Please enter again:");
+    }
+    return country;
+
+}
+//add country
+void testAddCountry()
+{
+    clsCountries country = getCountryInfo();
     if (clsCountries.isCountryExist(country.CountryName) )
     {
         Console.WriteLine("country already exist in the database");
@@ -358,11 +394,7 @@ void testUpdateCountry()
     }
     if (clsCountries.isCountryExist(country.CountryID))
     {
-        Console.WriteLine("enter the new country name: ");
-        while (string.IsNullOrWhiteSpace(country.CountryName = Console.ReadLine()))
-        {
-            Console.WriteLine("Country Name cannot be empty. Please enter again:");
-        }
+        getUpdatedCountryInfo(ref country);
         if (country.save())
         {
             Console.WriteLine("country updated suuccesfully");
@@ -432,15 +464,17 @@ void testListCountries()
         Console.WriteLine("-------------------- Country List ------------------------");
 
         // طباعة رؤوس الأعمدة مع تحديد عرض ثابت لكل عمود
-        string headerFormat = "{0,-6} | {1,-12}";
+        string headerFormat = "{0,-6} | {1,-12} | {2,-12} | {3,-22} | ";
 
-        Console.WriteLine(string.Format(headerFormat, "CountryID", "CountryName"));
+        Console.WriteLine(string.Format(headerFormat, "CountryID", "CountryName","Code","Phone Code"));
         Console.WriteLine(new string('-', 100));
         foreach (DataRow row in dt.Rows)
         {
             int id = (int)row["CountryID"];
             string countryName = row["CountryName"].ToString();
-            Console.WriteLine(string.Format(headerFormat, id, countryName));
+            string code = row["Code"].ToString();
+            string phoneCode = row["PhoneCode"].ToString();
+            Console.WriteLine(string.Format(headerFormat, id, countryName,code,phoneCode));
         }
     }
     else Console.WriteLine("countries not found");
@@ -453,6 +487,7 @@ void testListCountries()
 //testListContacts();
 //testIsContactExist();
 // testFindCountryByName();
+//testFindCountry();
 //testAddCountry();
 //testUpdateCountry();
 //testDeleteCountry();
