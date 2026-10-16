@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsDataLayer", "Contac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactsBusinessLayer", "ContactsBusinessLayer\ContactsBusinessLayer.csproj", "{630F6AB5-CE4A-706B-6B4A-4BB2A9B64634}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winFormPresentationLayer", "winFormPresentationLayer\winFormPresentationLayer.csproj", "{3BD1B232-977E-467D-9C3C-C06C5888E38D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{630F6AB5-CE4A-706B-6B4A-4BB2A9B64634}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{630F6AB5-CE4A-706B-6B4A-4BB2A9B64634}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{630F6AB5-CE4A-706B-6B4A-4BB2A9B64634}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BD1B232-977E-467D-9C3C-C06C5888E38D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BD1B232-977E-467D-9C3C-C06C5888E38D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BD1B232-977E-467D-9C3C-C06C5888E38D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BD1B232-977E-467D-9C3C-C06C5888E38D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
