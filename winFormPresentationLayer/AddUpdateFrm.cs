@@ -36,6 +36,7 @@ namespace winFormPresentationLayer
                 titleLbl.Text = "Add Contact";
                 return;
             }
+            titleLbl.Text = "Update Contact";
             _contact = clsContact.GetContact(_contactID);
             if (_contact == null)
             {
@@ -50,6 +51,12 @@ namespace winFormPresentationLayer
             tbAddress.Text = _contact.Address;
             dateTime.Value = _contact.DateOfBirth;
             cbCountry.SelectedIndex = cbCountry.FindString(clsCountries.GetCountry(_contact.CountryID).CountryName);
+            if (!string.IsNullOrWhiteSpace(_contact.ImagePath))
+            {
+                linkLabel2.Visible = true;
+                pictureBox1.ImageLocation = _contact.ImagePath;
+            }
+
         }
         private void AddUpdateFrm_Load(object sender, EventArgs e)
         {
@@ -78,7 +85,7 @@ namespace winFormPresentationLayer
                 tbFname.Focus();
                 return;
             }
-            _contact.FirstName=tbFname.Text;
+            _contact.FirstName = tbFname.Text;
             if (string.IsNullOrWhiteSpace(tbLname.Text))
             {
                 MessageBox.Show("Last name cannot be empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -109,6 +116,7 @@ namespace winFormPresentationLayer
             _contact.Address = tbAddress.Text;
             _contact.DateOfBirth = dateTime.Value;
             _contact.CountryID = countryid;
+            _contact.ImagePath = pictureBox1.ImageLocation;
             if (_contact.save())
             {
                 tbID.Text = _contact.ContactID.ToString();
@@ -138,6 +146,25 @@ namespace winFormPresentationLayer
             }
         }
 
-       
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openFileDialog1.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp";
+            openFileDialog1.Title = "Select Contact Image";
+            // فتح نافذة اختيار الملفات
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // عرض الصورة مباشرة داخل الـ PictureBox باستخدام مسار الملف
+                pictureBox1.ImageLocation = openFileDialog1.FileName;
+
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            pictureBox1.ImageLocation = null;
+            
+        }
     }
 }

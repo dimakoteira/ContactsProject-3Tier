@@ -64,6 +64,7 @@
             dgvListContacts.RowHeadersWidth = 51;
             dgvListContacts.Size = new Size(1069, 433);
             dgvListContacts.TabIndex = 1;
+            dgvListContacts.CellContentClick += dgvListContacts_CellContentClick;
             dgvListContacts.MouseDown += dgv_mouseDown;
             // 
             // contextMenuStrip1
@@ -71,19 +72,19 @@
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { updateToolStripMenuItem, deleteToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(211, 80);
+            contextMenuStrip1.Size = new Size(126, 52);
             // 
             // updateToolStripMenuItem
             // 
             updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            updateToolStripMenuItem.Size = new Size(210, 24);
+            updateToolStripMenuItem.Size = new Size(125, 24);
             updateToolStripMenuItem.Text = "update";
             updateToolStripMenuItem.Click += updateToolStripMenuItem_Click;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(210, 24);
+            deleteToolStripMenuItem.Size = new Size(125, 24);
             deleteToolStripMenuItem.Text = "delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 

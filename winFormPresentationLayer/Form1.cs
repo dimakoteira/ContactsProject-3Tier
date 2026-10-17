@@ -49,7 +49,7 @@ namespace winFormPresentationLayer
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        { 
+        {
 
             var result = MessageBox.Show(
                 "Are you sure you want to delete this contact?",
@@ -68,9 +68,14 @@ namespace winFormPresentationLayer
                 if (clsContact.deleteContact(id))
                     MessageBox.Show("contact deleted successfully", "success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else MessageBox.Show("contact not deleted ", "failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Form1_Load(sender,e);
+                Form1_Load(sender, e);
 
             }
+        }
+
+        private void dgvListContacts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

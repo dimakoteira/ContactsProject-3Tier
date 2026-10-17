@@ -49,7 +49,12 @@
             btnSave = new Button();
             errorProvider1 = new ErrorProvider(components);
             tbAddress = new TextBox();
+            pictureBox1 = new PictureBox();
+            openFileDialog1 = new OpenFileDialog();
+            linkLabel1 = new LinkLabel();
+            linkLabel2 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // titleLbl
@@ -211,7 +216,6 @@
             cbCountry.BackColor = Color.LavenderBlush;
             cbCountry.ForeColor = Color.Crimson;
             cbCountry.FormattingEnabled = true;
-            cbCountry.Items.AddRange(new object[] { "United States", "france", "Canada", "Australia", "Germany", "Spain", "lebanon", "syria" });
             cbCountry.Location = new Point(186, 478);
             cbCountry.Name = "cbCountry";
             cbCountry.Size = new Size(151, 28);
@@ -256,11 +260,50 @@
             tbAddress.TabIndex = 7;
             tbAddress.Validating += validateNotNull;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(847, 141);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(236, 240);
+            pictureBox1.TabIndex = 21;
+            pictureBox1.TabStop = false;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            openFileDialog1.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(845, 105);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(81, 20);
+            linkLabel1.TabIndex = 22;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "add image";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            // 
+            // linkLabel2
+            // 
+            linkLabel2.AutoSize = true;
+            linkLabel2.Location = new Point(966, 107);
+            linkLabel2.Name = "linkLabel2";
+            linkLabel2.Size = new Size(105, 20);
+            linkLabel2.TabIndex = 23;
+            linkLabel2.TabStop = true;
+            linkLabel2.Text = "remove image";
+            linkLabel2.Visible = false;
+            linkLabel2.LinkClicked += linkLabel2_LinkClicked;
+            // 
             // AddUpdateFrm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1238, 764);
+            Controls.Add(linkLabel2);
+            Controls.Add(linkLabel1);
+            Controls.Add(pictureBox1);
             Controls.Add(tbAddress);
             Controls.Add(btnSave);
             Controls.Add(btnClose);
@@ -285,6 +328,7 @@
             Text = "AddUpdateFrm";
             Load += AddUpdateFrm_Load;
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -311,5 +355,9 @@
         private Button btnSave;
         private ErrorProvider errorProvider1;
         private TextBox tbAddress;
+        private LinkLabel linkLabel1;
+        private PictureBox pictureBox1;
+        private OpenFileDialog openFileDialog1;
+        private LinkLabel linkLabel2;
     }
 }
