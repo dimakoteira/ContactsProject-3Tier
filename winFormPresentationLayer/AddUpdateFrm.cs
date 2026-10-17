@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace winFormPresentationLayer
 {
-   
+
     public partial class AddUpdateFrm : Form
     {
-       public  enum enMode { add, update };
-       private  enMode _mode = enMode.add;
-       private clsContact _contact;
+        public enum enMode { add, update };
+        private enMode _mode = enMode.add;
+        private clsContact _contact;
         private int _contactID;
         private void _FillCountriesInComboBox()
         {
@@ -37,11 +37,12 @@ namespace winFormPresentationLayer
                 return;
             }
             _contact = clsContact.GetContact(_contactID);
-            if (_contact == null) { 
+            if (_contact == null)
+            {
                 MessageBox.Show("this contact is not found in the database");
                 this.Close();
                 return;
-        }
+            }
             tbFname.Text = _contact.FirstName;
             tbLname.Text = _contact.LastName;
             tbEmail.Text = _contact.Email;
@@ -59,9 +60,9 @@ namespace winFormPresentationLayer
         {
             InitializeComponent();
             _contactID = id;
-            if(_contactID==-1)
-                _mode=enMode.add;
-            else _mode=enMode.update;
+            if (_contactID == -1)
+                _mode = enMode.add;
+            else _mode = enMode.update;
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -71,14 +72,43 @@ namespace winFormPresentationLayer
         private void btnSave_Click(object sender, EventArgs e)
         {
             int countryid = clsCountries.GetCountry(cbCountry.Text).CountryID;
-            _contact.FirstName = tbFname.Text;
+            if (string.IsNullOrWhiteSpace(tbFname.Text))
+            {
+                MessageBox.Show("First name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbFname.Focus();
+                return;
+            }
+            _contact.FirstName=tbFname.Text;
+            if (string.IsNullOrWhiteSpace(tbLname.Text))
+            {
+                MessageBox.Show("Last name cannot be empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbFname.Focus();
+                return;
+            }
             _contact.LastName = tbLname.Text;
+            if (string.IsNullOrWhiteSpace(tbEmail.Text))
+            {
+                MessageBox.Show("Email cannot be empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbFname.Focus();
+                return;
+            }
             _contact.Email = tbEmail.Text;
+            if (string.IsNullOrWhiteSpace(tbPhone.Text))
+            {
+                MessageBox.Show("Phone cannot be empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbFname.Focus();
+                return;
+            }
             _contact.Phone = tbPhone.Text;
+            if (string.IsNullOrWhiteSpace(tbAddress.Text))
+            {
+                MessageBox.Show("Address cannot be empty", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbFname.Focus();
+                return;
+            }
             _contact.Address = tbAddress.Text;
             _contact.DateOfBirth = dateTime.Value;
-           
-                _contact.CountryID = countryid;
+            _contact.CountryID = countryid;
             if (_contact.save())
             {
                 tbID.Text = _contact.ContactID.ToString();
@@ -92,6 +122,22 @@ namespace winFormPresentationLayer
 
         }
 
+        private void validateNotNull(object sender, CancelEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(tb.Text))
+            {
+                e.Cancel = true;
+                tb.Focus();
+                errorProvider1.SetError(tb, "this field cannot be empty");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(tb, "");
+            }
+        }
 
+       
     }
 }

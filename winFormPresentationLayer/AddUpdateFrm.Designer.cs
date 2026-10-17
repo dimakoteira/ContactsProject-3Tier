@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             titleLbl = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -43,10 +44,12 @@
             tbEmail = new TextBox();
             tbLname = new TextBox();
             dateTime = new DateTimePicker();
-            tbAddress = new RichTextBox();
             cbCountry = new ComboBox();
             btnClose = new Button();
             btnSave = new Button();
+            errorProvider1 = new ErrorProvider(components);
+            tbAddress = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // titleLbl
@@ -164,7 +167,8 @@
             tbFname.Location = new Point(186, 183);
             tbFname.Name = "tbFname";
             tbFname.Size = new Size(175, 27);
-            tbFname.TabIndex = 10;
+            tbFname.TabIndex = 1;
+            tbFname.Validating += validateNotNull;
             // 
             // tbPhone
             // 
@@ -172,7 +176,8 @@
             tbPhone.Location = new Point(186, 399);
             tbPhone.Name = "tbPhone";
             tbPhone.Size = new Size(175, 27);
-            tbPhone.TabIndex = 13;
+            tbPhone.TabIndex = 4;
+            tbPhone.Validating += validateNotNull;
             // 
             // tbEmail
             // 
@@ -180,7 +185,8 @@
             tbEmail.Location = new Point(186, 335);
             tbEmail.Name = "tbEmail";
             tbEmail.Size = new Size(175, 27);
-            tbEmail.TabIndex = 14;
+            tbEmail.TabIndex = 3;
+            tbEmail.Validating += validateNotNull;
             // 
             // tbLname
             // 
@@ -188,7 +194,8 @@
             tbLname.Location = new Point(186, 268);
             tbLname.Name = "tbLname";
             tbLname.Size = new Size(175, 27);
-            tbLname.TabIndex = 15;
+            tbLname.TabIndex = 2;
+            tbLname.Validating += validateNotNull;
             // 
             // dateTime
             // 
@@ -197,15 +204,7 @@
             dateTime.Location = new Point(186, 546);
             dateTime.Name = "dateTime";
             dateTime.Size = new Size(250, 27);
-            dateTime.TabIndex = 16;
-            // 
-            // tbAddress
-            // 
-            tbAddress.Location = new Point(186, 604);
-            tbAddress.Name = "tbAddress";
-            tbAddress.Size = new Size(192, 103);
-            tbAddress.TabIndex = 17;
-            tbAddress.Text = "";
+            dateTime.TabIndex = 6;
             // 
             // cbCountry
             // 
@@ -216,7 +215,7 @@
             cbCountry.Location = new Point(186, 478);
             cbCountry.Name = "cbCountry";
             cbCountry.Size = new Size(151, 28);
-            cbCountry.TabIndex = 18;
+            cbCountry.TabIndex = 5;
             // 
             // btnClose
             // 
@@ -243,15 +242,29 @@
             btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
+            // tbAddress
+            // 
+            tbAddress.BackColor = Color.LavenderBlush;
+            tbAddress.Location = new Point(186, 619);
+            tbAddress.Multiline = true;
+            tbAddress.Name = "tbAddress";
+            tbAddress.Size = new Size(175, 79);
+            tbAddress.TabIndex = 7;
+            tbAddress.Validating += validateNotNull;
+            // 
             // AddUpdateFrm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1238, 764);
+            Controls.Add(tbAddress);
             Controls.Add(btnSave);
             Controls.Add(btnClose);
             Controls.Add(cbCountry);
-            Controls.Add(tbAddress);
             Controls.Add(dateTime);
             Controls.Add(tbLname);
             Controls.Add(tbEmail);
@@ -271,6 +284,7 @@
             Name = "AddUpdateFrm";
             Text = "AddUpdateFrm";
             Load += AddUpdateFrm_Load;
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -292,9 +306,10 @@
         private TextBox tbEmail;
         private TextBox tbLname;
         private DateTimePicker dateTime;
-        private RichTextBox tbAddress;
         private ComboBox cbCountry;
         private Button btnClose;
         private Button btnSave;
+        private ErrorProvider errorProvider1;
+        private TextBox tbAddress;
     }
 }
