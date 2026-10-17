@@ -150,10 +150,8 @@ namespace winFormPresentationLayer
         {
             openFileDialog1.Filter = "Image Files (*.jpg; *.jpeg; *.png; *.gif; *.bmp)|*.jpg; *.jpeg; *.png; *.gif; *.bmp";
             openFileDialog1.Title = "Select Contact Image";
-            // فتح نافذة اختيار الملفات
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                // عرض الصورة مباشرة داخل الـ PictureBox باستخدام مسار الملف
                 pictureBox1.ImageLocation = openFileDialog1.FileName;
 
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
