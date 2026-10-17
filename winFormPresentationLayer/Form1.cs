@@ -73,9 +73,6 @@ namespace winFormPresentationLayer
             }
         }
 
-        private void dgvListContacts_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+       
     }
 }

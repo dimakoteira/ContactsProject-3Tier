@@ -64,7 +64,6 @@
             dgvListContacts.RowHeadersWidth = 51;
             dgvListContacts.Size = new Size(1069, 433);
             dgvListContacts.TabIndex = 1;
-            dgvListContacts.CellContentClick += dgvListContacts_CellContentClick;
             dgvListContacts.MouseDown += dgv_mouseDown;
             // 
             // contextMenuStrip1
