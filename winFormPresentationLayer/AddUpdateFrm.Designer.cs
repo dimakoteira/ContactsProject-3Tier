@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            titleLbl = new Label();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
@@ -49,16 +49,16 @@
             btnSave = new Button();
             SuspendLayout();
             // 
-            // label1
+            // titleLbl
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = Color.PaleVioletRed;
-            label1.Location = new Point(526, 23);
-            label1.Name = "label1";
-            label1.Size = new Size(188, 39);
-            label1.TabIndex = 0;
-            label1.Text = "Add Contact";
+            titleLbl.AutoSize = true;
+            titleLbl.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            titleLbl.ForeColor = Color.PaleVioletRed;
+            titleLbl.Location = new Point(526, 23);
+            titleLbl.Name = "titleLbl";
+            titleLbl.Size = new Size(188, 39);
+            titleLbl.TabIndex = 0;
+            titleLbl.Text = "Add Contact";
             // 
             // label2
             // 
@@ -165,7 +165,6 @@
             tbFname.Name = "tbFname";
             tbFname.Size = new Size(175, 27);
             tbFname.TabIndex = 10;
-//            tbFname.TextChanged += textBox2_TextChanged;
             // 
             // tbPhone
             // 
@@ -267,7 +266,7 @@
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(titleLbl);
             ForeColor = Color.LavenderBlush;
             Name = "AddUpdateFrm";
             Text = "AddUpdateFrm";
@@ -278,7 +277,7 @@
 
         #endregion
 
-        private Label label1;
+        private Label titleLbl;
         private Label label2;
         private Label label3;
         private Label label4;

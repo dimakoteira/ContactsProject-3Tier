@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             dgvListContacts = new DataGridView();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            updateToolStripMenuItem = new ToolStripMenuItem();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
             label2 = new Label();
             btnAddContact = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvListContacts).BeginInit();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -48,12 +53,39 @@
             // 
             // dgvListContacts
             // 
+            dgvListContacts.AllowUserToAddRows = false;
+            dgvListContacts.AllowUserToDeleteRows = false;
+            dgvListContacts.AllowUserToOrderColumns = true;
             dgvListContacts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvListContacts.ContextMenuStrip = contextMenuStrip1;
             dgvListContacts.Location = new Point(44, 139);
             dgvListContacts.Name = "dgvListContacts";
+            dgvListContacts.ReadOnly = true;
             dgvListContacts.RowHeadersWidth = 51;
             dgvListContacts.Size = new Size(1069, 433);
             dgvListContacts.TabIndex = 1;
+            dgvListContacts.MouseDown += dgv_mouseDown;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { updateToolStripMenuItem, deleteToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(211, 80);
+            // 
+            // updateToolStripMenuItem
+            // 
+            updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            updateToolStripMenuItem.Size = new Size(210, 24);
+            updateToolStripMenuItem.Text = "update";
+            updateToolStripMenuItem.Click += updateToolStripMenuItem_Click;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(210, 24);
+            deleteToolStripMenuItem.Text = "delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
             // label2
             // 
@@ -92,6 +124,7 @@
             Text = "Form1";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvListContacts).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -102,5 +135,8 @@
         private DataGridView dgvListContacts;
         private Label label2;
         private Button btnAddContact;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem updateToolStripMenuItem;
+        private ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

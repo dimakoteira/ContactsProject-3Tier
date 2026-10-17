@@ -1,3 +1,7 @@
 ﻿10/13/2026 6:59:32 PM: Must declare the scalar variable "@ID".
 10/15/2026 11:22:45 AM: Must declare the scalar variable "@Id".
 10/15/2026 11:23:01 AM: Must declare the scalar variable "@Id".
+10/16/2026 9:36:34 PM: The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Contacts__Countr__398D8EEE". The conflict occurred in database "ContactsDB2", table "dbo.Countries", column 'CountryID'.
+The statement has been terminated.
+10/16/2026 9:38:45 PM: The INSERT statement conflicted with the FOREIGN KEY constraint "FK__Contacts__Countr__398D8EEE". The conflict occurred in database "ContactsDB2", table "dbo.Countries", column 'CountryID'.
+The statement has been terminated.
